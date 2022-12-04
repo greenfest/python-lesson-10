@@ -4,7 +4,8 @@ from db import *
 
 TOKEN = os.getenv('BOT_TOKEN')
 bot = telebot.TeleBot(TOKEN)
-
+commands = [types.BotCommand(command="support", description="Оставить обращение в техподдержку"), types.BotCommand(command="getunreads", description="Ответить на сообщение клиента")]
+bot.set_my_commands(commands)
 
 isRunning = False
 
@@ -12,7 +13,7 @@ isRunning = False
 def start_handler(message):
     global isRunning
     if not isRunning:
-        bot.send_message(message.chat.id, emoji.emojize('Привет! :waving_hand_light_skin_tone: Это чат технической поддержки. Открой меню, чтобы увидеть команды или напиши свой вопрос в чат'))
+        bot.send_message(message.chat.id, emoji.emojize('Привет! :waving_hand_light_skin_tone: Это чат технической поддержки. Открой меню, чтобы увидеть команды'))
         isRunning = True
 
 @bot.message_handler(commands=['support'])
@@ -40,7 +41,7 @@ def addToDB(message):
     isRunning = False    
 
 
-@bot.message_handler(commands=['getUnreads'])
+@bot.message_handler(commands=['getunreads'])
 def getUnreads_handler(message=""):
     chat_id = message.chat.id
     try:
